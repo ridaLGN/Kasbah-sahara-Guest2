@@ -1,0 +1,8 @@
+*.png.tmp
+.env.*.local
+.env.local
+dist
+node_modules
+playwright-report
+raw
+test-results

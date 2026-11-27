@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ivory: #f8f4ec;
+  --color-ivory-deep: #f0e8da;
+  --color-sand: #d8c3a5;
+  --color-gold: #b99a65;
+  /* Darker gold for small text on ivory (WCAG AA ≥ 4.5:1). */
+  --color-gold-ink: #7d6237;
+  --color-brown: #30251d;
+  --color-brown-soft: #5a4636;
+  --color-charcoal: #191714;
+  --color-whatsapp: #128c4a;
+  --color-whatsapp-hover: #0f7a40;
+
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Jost', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --ease-lux: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-rise: rise 1s var(--ease-lux) both;
+  --animate-fade: fade 1.4s ease both;
+  --animate-drift: drift 24s ease-in-out infinite alternate;
+  --animate-toast: toast 0.4s var(--ease-lux) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes drift {
+    from {
+      transform: scale(1.06) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.14) translate3d(-1.5%, -1%, 0);
+    }
+  }
+  @keyframes toast {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 12px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 1.5rem;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    background: var(--color-charcoal);
+  }
+  body {
+    @apply bg-ivory font-sans text-brown antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-sand);
+    color: var(--color-charcoal);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility tracking-eyebrow {
+  letter-spacing: 0.34em;
+}
+
+@utility btn {
+  @apply inline-flex min-h-13 items-center justify-center gap-2.5 rounded-full px-7 text-[0.8rem] font-medium uppercase transition duration-300 select-none active:scale-[0.98];
+  letter-spacing: 0.16em;
+}
+
+/* Staggered entrance: style={{ '--d': '120ms' }} */
+@utility delay-var {
+  animation-delay: var(--d, 0ms);
+}
+
+@layer components {
+  .eyebrow {
+    @apply tracking-eyebrow text-[0.7rem] font-medium uppercase text-gold-ink;
+  }
+  .btn-gold {
+    @apply btn bg-brown text-ivory shadow-lg shadow-charcoal/15 hover:bg-charcoal;
+  }
+  .btn-gold-solid {
+    @apply btn bg-gold text-charcoal hover:bg-sand;
+  }
+  .btn-line {
+    @apply btn border border-brown/25 text-brown hover:border-brown hover:bg-brown hover:text-ivory;
+  }
+  .btn-line-light {
+    @apply btn border border-ivory/35 text-ivory hover:border-ivory hover:bg-ivory hover:text-charcoal;
+  }
+  .btn-whatsapp {
+    @apply btn bg-whatsapp text-white hover:bg-whatsapp-hover;
+  }
+
+  /* Kasbah arch – used for icon medallions and frames. */
+  .arch {
+    border-radius: 999px 999px 0.9rem 0.9rem;
+  }
+
+  /* Thin rule – diamond – thin rule (Amazigh motif). */
+  .ornament {
+    @apply flex items-center justify-center gap-3 text-gold;
+  }
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    @apply h-px w-10 bg-current opacity-70;
+  }
+
+  .card {
+    @apply rounded-[1.75rem] border border-sand/60 bg-[#fdfbf7] shadow-[0_1px_0_rgba(255,255,255,.8)_inset,0_24px_48px_-28px_rgba(48,37,29,.35)];
+  }
+
+  /* Faint zellige-like lattice */
+  .pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23b99a65' stroke-opacity='.16' stroke-width='1'%3E%3Cpath d='M32 4 60 32 32 60 4 32Z'/%3E%3Cpath d='M32 20 44 32 32 44 20 32Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .pattern-dark {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23d8c3a5' stroke-opacity='.07' stroke-width='1'%3E%3Cpath d='M32 4 60 32 32 60 4 32Z'/%3E%3Cpath d='M32 20 44 32 32 44 20 32Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Dotted leader between a drink name and its price */
+  .leader {
+    @apply mx-2 min-w-6 flex-1 translate-y-[-0.3em] self-end border-b border-dotted border-gold/60;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .qr-svg svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Cormorant's default old-style figures read poorly in prices and phone numbers. */
+.font-display {
+  font-variant-numeric: lining-nums;
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Kasbah Sahara Services – Guest Experience",
+  "short_name": "Kasbah Sahara",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f4ec",
+  "theme_color": "#191714",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }]
+}
